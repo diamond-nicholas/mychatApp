@@ -28,6 +28,35 @@ const userRegister = async (req, res) => {
   }
 };
 
+const loginUser = async (req, res) => {
+  try {
+    const { email, password } = req.body;
+    // const usernameCheck = await User.findOne({ username });
+    // if (usernameCheck) {
+    //   return res.json({ msg: 'Username already used', status: false });
+    // }
+    const user = await User.findOne({ email });
+    if (!user) {
+      return res.json({
+        msg: 'Incorrect email address or password',
+        status: false,
+      });
+    }
+    const isPasswordValid = await bcrypt.compare(password, user.password);
+
+    if (!isPasswordValid) {
+      return res.json({
+        msg: 'Incorrect email address or password',
+        status: false,
+      });
+    }
+    delete user.password;
+    return res.status(200).json({ user, status: true });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 const getAllUsers = async (req, res) => {
   try {
     const user = await User.find({});
@@ -43,5 +72,6 @@ const getAllUsers = async (req, res) => {
 
 module.exports = {
   userRegister,
+  loginUser,
   getAllUsers,
 };
