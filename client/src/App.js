@@ -7,6 +7,7 @@ function App() {
   return (
     <Router>
       <Routes>
+        <Route exact path='/' element={<Chat />} />
         <Route path='/register' element={<Register />} />
         <Route path='/login' element={<Login />} />
         <Route path='/chat' element={<Chat />} />
