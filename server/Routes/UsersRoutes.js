@@ -9,5 +9,6 @@ const {
 router.route('/register').post(userRegister);
 router.route('/login').post(loginUser);
 router.route('/get').get(getAllUsers);
+router.route('/setavatar/:id').post();
 
 module.exports = router;
